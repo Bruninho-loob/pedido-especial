@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido de Namoro</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fce4ec;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 350px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .foto-casal {
+            width: 100%;
+            height: auto;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            transition: all 0.5s ease;
+        }
+
+        h1 { font-size: 1.6em; color: #333; margin: 10px 0; }
+        p { color: #666; }
+        
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button {
+            border: none;
+            padding: 15px;
+            font-size: 1em;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-principal { background-color: #e91e63; color: white; width: 100%; }
+        .btn-sim { background-color: #4caf50; color: white; width: 100%; }
+        .btn-nao { background-color: #9e9e9e; color: white; width: 100%; position: relative; }
+
+        #message, #final-feliz { display: none; }
+
+        /* Estilo para a mensagem final */
+        .texto-sucesso {
+            color: #e91e63;
+            font-size: 1.4em;
+            font-weight: bold;
+            animation: heartBeat 1.2s infinite;
+        }
+
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="painel">
+        <img src="foto.jpeg" alt="Nossa Foto" class="foto-casal" id="foto-exibida">
+        
+        <div id="conteudo-inicial">
+            <h1>Oii Ana</h1>
+            <p>Tenho uma pergunta a te fazer...</p>
+            <button class="btn-principal" onclick="showMessage()">Toque aqui para descobrir</button>
+        </div>
+
+        <div id="message">
+            <h1>Você aceita namorar comigo?</h1>
+            <div class="btn-group">
+                <button class="btn-sim" onclick="aceitou()">Sim, eu quero! ❤️</button>
+                <button id="btnNao" class="btn-nao" onmouseover="fugir()" onclick="rejeitou()">Não quero...</button>
+            </div>
+        </div>
+
+        <div id="final-feliz">
+            <p class="texto-sucesso">TE AMO MINHA PRINCESA!</p>
+            <p>Seremos felizes meu amorS</p>
+        </div>
+    </div>
+
+    <script>
+        function showMessage() {
+            document.getElementById('message').style.display = 'block';
+            document.getElementById('conteudo-inicial').style.display = 'none';
+        }
+
+        function fugir() {
+            const btnNao = document.getElementById('btnNao');
+            const larguraJanela = window.innerWidth - 150;
+            const alturaJanela = window.innerHeight - 50;
+
+            const novaPosicaoX = Math.random() * larguraJanela;
+            const novaPosicaoY = Math.random() * alturaJanela;
+
+            btnNao.style.position = "fixed";
+            btnNao.style.left = novaPosicaoX + "px";
+            btnNao.style.top = novaPosicaoY + "px";
+            btnNao.style.width = "120px";
+        }
+
+        function aceitou() {
+            // 1. Esconde as perguntas e botões
+            document.getElementById('message').style.display = 'none';
+            
+            // 2. Troca a foto (Ajuste o nome do arquivo aqui)
+            document.getElementById('foto-exibida').src = 'foto_feliz.jpeg';
+            
+            // 3. Mostra a mensagem final
+            document.getElementById('final-feliz').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
