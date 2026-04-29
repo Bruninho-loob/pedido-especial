@@ -18,32 +18,38 @@
 
         .container {
             background-color: white;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            max-width: 350px;
-            width: 90%;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            max-width: 90%;
             text-align: center;
+            animation: fadeIn 2s;
             position: relative;
             z-index: 1;
         }
 
-        .foto-casal {
-            width: 100%;
-            height: auto;
-            border-radius: 15px;
-            margin-bottom: 15px;
-            transition: all 0.5s ease;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
-        h1 { font-size: 1.6em; color: #333; margin: 10px 0; }
-        p { color: #666; }
-        
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 20px;
+        .foto-casal {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #e91e63;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.1em;
+            margin: 10px 0;
         }
 
         button {
@@ -62,7 +68,6 @@
 
         #message, #final-feliz { display: none; }
 
-        /* Estilo para a mensagem final */
         .texto-sucesso {
             color: #e91e63;
             font-size: 1.4em;
@@ -75,9 +80,34 @@
             50% { transform: scale(1.1); }
             100% { transform: scale(1); }
         }
+
+        .hearts-floating {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 2em;
+            animation: float 4s linear infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
+
+    <div class="hearts-floating" id="hearts-bg"></div>
 
     <div class="container" id="painel">
         <img src="foto.jpeg" alt="Nossa Foto" class="foto-casal" id="foto-exibida">
@@ -123,14 +153,25 @@
         }
 
         function aceitou() {
-            // 1. Esconde as perguntas e botões
+          
             document.getElementById('message').style.display = 'none';
             
-            // 2. Troca a foto (Ajuste o nome do arquivo aqui)
+          
             document.getElementById('foto-exibida').src = 'foto_feliz.jpeg';
             
-            // 3. Mostra a mensagem final
+            
             document.getElementById('final-feliz').style.display = 'block';
+            
+            
+            const heartsBg = document.getElementById('hearts-bg');
+            for (let i = 0; i < 25; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.textContent = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 2 + 's';
+                heartsBg.appendChild(heart);
+            }
         }
     </script>
 </body>
